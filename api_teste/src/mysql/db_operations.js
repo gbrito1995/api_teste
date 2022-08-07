@@ -1,4 +1,4 @@
-const {pool} = require('./mysql/db_connection.js')
+const {pool} = require('./db_connection.js')
 
 const fnAlterHotel = (req, res) => {
 
