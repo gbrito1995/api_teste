@@ -85,7 +85,7 @@ app.post('/hotels', validateInsertHotel, (req, res) =>{
 
     const {name, description, lat, lng, price, status} = req.body
 
-    const tabFields ={name, description, lat, lng, price, status}
+    const tabFields = {name, description, lat, lng, price, status}
 
     const queryStr = 'INSERT INTO hotels SET ?'
 
@@ -104,8 +104,37 @@ app.post('/hotels', validateInsertHotel, (req, res) =>{
   
 })
 
-app.put('/hotels:id', (req, res) =>{
-    res.send('Hello World');
+app.put('/hotels/:id', (req, res) =>{
+
+  const arrKey = []
+  const arrValue = []
+  const {id} = req.params;
+
+  let reqParams = req.body
+
+  for (const [key, value] of Object.entries(reqParams)) {
+
+    if (!value) {
+      delete reqParams[key]
+    }
+
+  }
+
+  pool.getConnection((err, connection) => {
+
+    const queryStr = 'UPDATE hotels SET ? WHERE id = ?';
+
+    connection.query(queryStr, [reqParams, id], (err, results, fields) =>{
+      
+      if (err) throw err
+
+      console.log(results)
+      
+      res.send('OK');
+    })
+
+  })
+
 })
 
 app.listen(port, () => {
