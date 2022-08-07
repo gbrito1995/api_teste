@@ -1,3 +1,5 @@
+const {pool} = require('../mysql/db_connection.js')
+
 //middleware de validação de pesquisa com filtro de preço
 const validatePrice = (req, res, next) => {
 

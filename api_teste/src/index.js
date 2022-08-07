@@ -1,7 +1,6 @@
 const express = require('express')
 const app = express()
 const port = 3333
-const {pool} = require('./mysql/db_connection')
 const {fnAlterHotel, fnGetAllHotels, fnGetHotelsFilter} = require('./mysql/db_operations.js')
 const {validatePrice, validateInsertHotel, validateId, authUser} = require('./middlewares/middleware.js')
 
