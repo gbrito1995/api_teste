@@ -28,7 +28,43 @@ const validateInsertHotel = (req, res, next) => {
 
 }
 
+//middleware de validação de id do hotel
+const validateId = (req, res, next) => {
+
+  pool.getConnection((err, connection) => {
+
+    if (err) throw err
+
+    const queryStr = 'SELECT * FROM hotels WHERE id = ?';
+    const {id} = req.params
+
+    connection.query(queryStr, id, (error, rows, fields) => {
+
+      if (error) throw error
+
+      if (rows.length < 1) return res.status(401).send('Este hotel não existe') 
+      
+      return next()
+
+    })
+
+  })
+
+}
+
+//middleware de validação de login
+const authUser = (req, res, next) =>{
+
+  const {authorization}  = req.headers
+
+  if (authorization !== 'Basic dXNlcjpmTW0hNEJFRjRCZkRKREBr') return res.status(401).json({error: 'Login ou senha estão incorretos'})
+
+  return next()
+
+}
+
 app.use(express.json())
+app.use(authUser)
 
 app.get('/hotels', validatePrice, (req, res) => {
 
@@ -104,10 +140,7 @@ app.post('/hotels', validateInsertHotel, (req, res) =>{
   
 })
 
-app.put('/hotels/:id', (req, res) =>{
-
-  const arrKey = []
-  const arrValue = []
+app.put('/hotels/:id', validateId, (req, res) =>{
   const {id} = req.params;
 
   let reqParams = req.body
@@ -122,15 +155,19 @@ app.put('/hotels/:id', (req, res) =>{
 
   pool.getConnection((err, connection) => {
 
+    if (err) throw err
+
     const queryStr = 'UPDATE hotels SET ? WHERE id = ?';
 
-    connection.query(queryStr, [reqParams, id], (err, results, fields) =>{
+    connection.query(queryStr, [reqParams, id], (error, results, fields) =>{
       
-      if (err) throw err
+      connection.release()
+
+      if (error) throw error
 
       console.log(results)
       
-      res.send('OK');
+      res.send('Hotel alterado com sucesso');
     })
 
   })
