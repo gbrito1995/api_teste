@@ -1,3 +1,4 @@
+require('dotenv').config()
 const {pool} = require('../mysql/db_connection.js')
 
 //middleware de validação de pesquisa com filtro de preço
@@ -59,7 +60,7 @@ const validateInsertHotel = (req, res, next) => {
   
     const {authorization}  = req.headers
   
-    if (authorization !== 'Basic dXNlcjpmTW0hNEJFRjRCZkRKREBr') 
+    if (authorization !== process.env.USER_AUTH) 
       return res.status(401).json({error: 'Login ou senha estão incorretos'})
   
     return next()
