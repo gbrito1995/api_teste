@@ -1,6 +1,6 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
-require('dotenv').config
 const port = process.env.APP_PORT
 const { fnAlterHotel, fnGetAllHotels, fnGetHotelsFilter } = require('./mysql/db_operations.js')
 const { validatePrice, validateInsertHotel, validateId, authUser } = require('./middlewares/middleware.js')
