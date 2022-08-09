@@ -22,7 +22,9 @@ app.post('/hotels', validateInsertHotel, (req, res) => {
 })
 
 app.put('/hotels/:id', validateId, (req, res) => {
+
   fnAlterHotel(req, res);
+
 })
 
 app.listen(port, () => {
