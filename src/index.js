@@ -28,6 +28,6 @@ app.put('/hotels/:id', validateId, (req, res) => {
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`API teste escutando na porta ${port}`)
 })
 
