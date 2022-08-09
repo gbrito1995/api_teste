@@ -1,8 +1,9 @@
 const express = require('express')
 const app = express()
-const port = 3333
-const {fnAlterHotel, fnGetAllHotels, fnGetHotelsFilter} = require('./mysql/db_operations.js')
-const {validatePrice, validateInsertHotel, validateId, authUser} = require('./middlewares/middleware.js')
+require('dotenv').config
+const port = process.env.APP_PORT
+const { fnAlterHotel, fnGetAllHotels, fnGetHotelsFilter } = require('./mysql/db_operations.js')
+const { validatePrice, validateInsertHotel, validateId, authUser } = require('./middlewares/middleware.js')
 
 app.use(express.json())
 //middleware usado em todas as rotas
@@ -14,14 +15,14 @@ app.get('/hotels', validatePrice, (req, res) => {
 
 })
 
-app.post('/hotels', validateInsertHotel, (req, res) =>{
+app.post('/hotels', validateInsertHotel, (req, res) => {
 
   fnGetHotelsFilter(req, res)
-  
+
 })
 
-app.put('/hotels/:id', validateId, (req, res) =>{
-  fnAlterHotel(req, res); 
+app.put('/hotels/:id', validateId, (req, res) => {
+  fnAlterHotel(req, res);
 })
 
 app.listen(port, () => {
