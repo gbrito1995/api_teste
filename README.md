@@ -18,6 +18,14 @@ O comando de inicilização da aplicação é:
 npm run dev
 ```
 
+# Autorização
+
+A autorização para todas as rotas é feita por meio de login e senha através do Basic Auth:
+
+username: user
+password: fMm!4BEF4BfDJD@k
+
+
 # Rotas GET
 
 Buscar todos os hotéis:
