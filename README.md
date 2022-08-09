@@ -72,8 +72,4 @@ corpo:
 ```
 
 
-<style>
-  pre {
-    rgba:(27, 31, 36, 0.08)
-  }
-</style>
+
